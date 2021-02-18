@@ -1,0 +1,37 @@
+#title {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#mainboard {
+    position: relative;
+    margin: 10px auto;
+    width: 550px;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 3px;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 1fr;
+}
+#boardplate {
+    display: grid;
+    grid-template-columns: repeat(10,40px);
+    height: 840px;
+    width: 400px;
+    margin: auto;
+    background-color: rgb(185, 184, 184);
+    border-radius: 3px;
+    outline: 2px solid #000;
+    grid-column: 2 / 3;
+}
+.grid {
+	outline:1px solid rgba(0,0,0,0.5);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.blockpiece {
+    background-color: rgba(255, 255, 255, 1);
+}
