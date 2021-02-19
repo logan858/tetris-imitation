@@ -2,30 +2,32 @@
 //array to hold the state of each grid element on the board, values of 0 or 1
 //var to keep track of the current score
 let tetrisBoard = [
-    [0,0], [1, 0], [2, 0], [3, 0], [5, 0], [6, 0], [7,0], [8,0], [9,0], [10,0],
-    [11,0], [12,0], [13,0], [14,0], [15,0], [16,0], [17,0], [18,0], [19,0], [20,0],
-    /*{21:0, 22:0, 23:0, 24:0, 25:0, 26:0, 27:0, 28:0, 29:0, 30:0},
-    {31:0, 32:0, 33:0, 34:0, 35:0, 36:0, 37:0, 38:0, 39:0, 40:0},
-    {41:0, 42:0, 43:0, 44:0, 45:0, 46:0, 47:0, 48:0, 49:0, 50:0},
-    {51:0, 52:0, 53:0, 54:0, 55:0, 56:0, 57:0, 58:0, 59:0, 60:0},
-    {61:0, 62:0, 63:0, 64:0, 65:0, 66:0, 67:0, 68:0, 69:0, 70:0},
-    {71:0, 72:0, 73:0, 74:0, 75:0, 76:0, 77:0, 78:0, 79:0, 80:0},
-    {81:0, 82:0, 83:0, 84:0, 85:0, 86:0, 87:0, 88:0, 89:0, 90:0},
-    {91:0, 92:0, 93:0, 94:0, 95:0, 96:0, 97:0, 98:0, 99:0, 100:0},*/
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
 ]
 let scoreTotal = 0;
+console.log(tetrisBoard)
+
 
 //VARS
 //each object shape will have a variable to hold it in
-let lL = function() {
-    tetrisBoard[4][1] = 1;
-    tetrisBoard[5][1] = 1;
-    tetrisBoard[14][1] = 1;
-    tetrisBoard[15][1] = 1;
-}
-lL();
-console.log(tetrisBoard[1][0])
-//variables to hold eventlisteners to move the block left or right, to flip 
+let sS = [];
+let sLL = [];
+let sLR = [];
+let sT = [];
+let sI = [];
+let shapeArr = [sS, sLL, sLR, sT, sI]
+
+
+//variables to hold dom objects (used to move the block left or right, to flip. dom objects to select score, start button, play music button)
 let squares = document.getElementById("boardplate")
 
 
@@ -42,23 +44,34 @@ function cGrid (x) {
 }
 cGrid(200);
 
-//function to add scores up after each block stops moving
-function score(x) {
+//function to add scores up after each row is completed, up to a max win condition
+function score() {
     scoreTotal += 100;
     return scoreTotal;
 }
-//function to choose which of the object shapes will go next, and display that object on the document
-function shaper() {
-    for (i = 0; i < tetrisBoard.length; i++) {
-       if (tetrisBoard[i][1] == 0) {
-                console.log(tetrisBoard);
-                let sqTarget = document.querySelectorAll(".grid");
-                sqTarget[i].classList.add("blockpiece");
+//functions to choose how each shape will move down the screen
+function squareShaper() {
+        let z = setInterval(function() {
+            for(i = 0; i < [tetrisBoard.length - 1]; i++) {
+                tetrisBoard[i][4] = 1
+                tetrisBoard[i][5] = 1
+                tetrisBoard[1 + i][4] = 1
+                tetrisBoard[1 + i][5] = 1
+                console.log(tetrisBoard)
+                if (tetrisBoard[i][4] == 1) {
+                    let idHighLighter = document.querySelector("#5");
+                    console.log(idHighLighter)
+                    idHighLighter.classList.add("blockpiece")
+                }
             }
-        }
-    }
-//console.log(tetrisBoard[0][3])
-shaper();
+            clearInterval(z);
+        }, 1000)
+        
+}
+squareShaper();
+
+
+
 //console.log(tetrisBoard)
 //function to move the object down a space in the grid every interval of time
 //function to move the block left
@@ -69,7 +82,10 @@ shaper();
 //function to check is highscore varialbe hits a certain level, prompting win condition
 
 
-//eventlisteners
+
+
+
+//EVENTLISTENERS
 squares.addEventListener("click", function(evnt) {
     let click = evnt.target
     console.log(click);
@@ -81,3 +97,4 @@ squares.addEventListener("click", function(evnt) {
 })
 
 //event listeners for left arrow & right arrow, and for spacebar/click to flip object
+//eventlistener for the 3 music options
