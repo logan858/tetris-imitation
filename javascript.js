@@ -14,7 +14,6 @@ let tetrisBoard = [
     [0,0,0,0,0,0,0,0,0,0],
 ]
 let scoreTotal = 0;
-console.log(tetrisBoard)
 
 
 //VARS
@@ -44,33 +43,42 @@ function cGrid (x) {
 }
 cGrid(200);
 
+
 //function to add scores up after each row is completed, up to a max win condition
-function score() {
-    scoreTotal += 100;
+function score(x) {
+    scoreTotal += x;
     return scoreTotal;
 }
-//functions to choose how each shape will move down the screen
-function squareShaper() {
-        let z = setInterval(function() {
-            for(i = 0; i < [tetrisBoard.length - 1]; i++) {
-                tetrisBoard[i][4] = 1
-                tetrisBoard[i][5] = 1
-                tetrisBoard[1 + i][4] = 1
-                tetrisBoard[1 + i][5] = 1
-                console.log(tetrisBoard)
-                if (tetrisBoard[i][4] == 1) {
-                    let idHighLighter = document.querySelector("#5");
-                    console.log(idHighLighter)
-                    idHighLighter.classList.add("blockpiece")
-                }
+
+//functions to choose how theSQUARE shape will move down the screen
+function squareShaper(y, x) {
+    let i = 0;
+    let z = setInterval(function() {
+        //switches any previous boardstatus container the previoys shape location back to 0
+        if(i > 2) {
+            for(j = 0; j < 10; j++) {
+                tetrisBoard[i- 1][j] = 0;
             }
+        }
+        //switches board status to 1, going down
+        tetrisBoard[0 + i][4 - y + x] = 1
+        tetrisBoard[0 + i][5 - y + x]  = 1
+        tetrisBoard[1 + i][4 - y + x] = 1
+        tetrisBoard[1 + i][5 - y + x] = 1
+        console.log(tetrisBoard[3])
+        i += 1;
+        if (i + 1 >= 10) {
             clearInterval(z);
-        }, 1000)
-        
+            return;
+        }
+        }, 1000)   
 }
-squareShaper();
+squareShaper(0, 0);
 
 
+function shapeMaker() {
+
+}
 
 //console.log(tetrisBoard)
 //function to move the object down a space in the grid every interval of time
@@ -98,3 +106,22 @@ squares.addEventListener("click", function(evnt) {
 
 //event listeners for left arrow & right arrow, and for spacebar/click to flip object
 //eventlistener for the 3 music options
+
+
+
+
+
+
+
+/// EXTRA blocks of code
+        //originally updated the visuals (css)
+        // for(i = 0; i < tetrisBoard.length; i++) {
+        //         let block1 = document.getElementById( + "5");
+        //         let block2 = document.getElementById("6");
+        //         let block3 = document.getElementById("15");
+        //         let block4 = document.getElementById("16");
+        //         block1.classList.add("blockpiece")
+        //         block2.classList.add("blockpiece")
+        //         block3.classList.add("blockpiece")
+        //         block4.classList.add("blockpiece")
+        //         console.log("test")
