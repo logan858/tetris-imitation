@@ -1,6 +1,14 @@
+/* Legend: 
+    smashBoy = square
+    orangeRicky = L, right facing
+    blueRicky = L, left facing
+    clevelandZ = Z, right facing
+    rhodeIslandZ = Z, left facing
+    hero = I
+    teewee = T
+*/
+
 //BOARDSTATES
-//array to hold the state of each grid element on the board, values of 0 or 1
-//var to keep track of the current score
 let tetrisBoard = [
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
@@ -39,54 +47,78 @@ cGrid(200);
 
 
 //VARS
-//starting positions for each block
+//starting positions for each block on the x axis
 let square1 = 5
 let square2 = 4
-
+let counter = 0
+let scoreTotal = 0;
 //variables to hold dom objects 
+function smashBoy(i) {
+    tetrisBoard[0 + i][square1] = 1
+    tetrisBoard[0 + i][square2]  = 1
+    tetrisBoard[1 + i][square1] = 1
+    tetrisBoard[1 + i][square2] = 1
+}
+function orangeRicky(i) {
+    tetrisBoard[0 + i][square2] = 1
+    tetrisBoard[1 + i][square2]  = 1
+    tetrisBoard[2 + i][square2] = 1
+    tetrisBoard[2 + i][square1] = 1
+}
 
 
 
 
 //FUNCTIONS
 //function to add scores up after each row is completed, up to a max win condition
-let scoreTotal = 0;
 function scoreTracker(x) {
     scoreTotal += x;
     return scoreTotal;
 }
 
-//functions to choose how theSQUARE shape will move down the screen
-function squareShaper(y, x) {
+function smashBoyShaper() {
     let i = 0;
     let z = setInterval(function() {
-        //switches board states to 0
         if(i >= 1) {
             shapeErase(i)
             for(j = 0; j < tetrisBoard.length; j++) {
                 tetrisBoard[i - 1][j] = 0;
             }
         }
-
-        // need the event listeners in here, and the erase function has to run inside the keystrokes just before the switch the square1 & 2 vars
-        //
-        //
-        //switches board states to 1, going down
-        tetrisBoard[0 + i][square1] = 1
-        tetrisBoard[0 + i][square2]  = 1
-        tetrisBoard[1 + i][square1] = 1
-        tetrisBoard[1 + i][square2] = 1
+        smashBoy(i)
         i += 1;
+        counter += 1;
         shapeDisplay(i)
         if (i + 1 >= tetrisBoard.length) {
             clearInterval(z);
             return;
         }
-    }, 300)   
+    }, 200)   
 }
-squareShaper();
+
+function orangeRickyShaper() {
+    let i = 0;
+    let z = setInterval(function() {
+        if(i >= 1) {
+            shapeErase(i)
+            for(j = 0; j < tetrisBoard.length; j++) {
+                tetrisBoard[i - 1][j] = 0;
+            }
+        }
+        orangeRicky(i)
+        i += 1;
+        counter += 1;
+        shapeDisplay(i)
+        if (i + 1 >= tetrisBoard.length) {
+            clearInterval(z);
+            return;
+        }
+    }, 200)   
+}
 
 
+
+//Visual functions that add visual css classlists, & remove them
 function shapeDisplay(x) {
     let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + square1 + 1] + ")") 
     let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + square2 + 1] + ")") 
@@ -109,8 +141,6 @@ function shapeErase(x) {
     blockLight4.classList.remove("blockpiece") 
 }
 
-//console.log(tetrisBoard)
-//function to move the object down a space in the grid every interval of time
 //function to flip the block
 //function to check to see if a full row of grid elements are all switched to 1, and then switches all values to 0 & deletes blocks
 //function to check to see if any grid elements at the top are switched to 1, prompting lose condition
@@ -118,36 +148,46 @@ function shapeErase(x) {
 
 
 
-
-
-// //EVENTLISTENERS
-// squares.addEventListener("click", function(evnt) {
-//     let click = evnt.target
-//     console.log(click);
-//     if(click.classList.contains("blockpiece")) {
-//         click.classList.remove("blockpiece")
-//     } else {
-//         click.classList.add("blockpiece")
-//     }
-// })
-//event listeners for left arrow & right arrow, and for spacebar/click to flip object
 document.addEventListener("keydown", function(evnt) {
-    if(evnt.code == "ArrowLeft") {
-        if (square1 > 1) {
-            square1 -= 1;
-        } 
-        if (square2 > 0) {
-            square2 -= 1;
+if(evnt.code == "ArrowLeft") {
+    if (square1 > 1) {
+        if (counter + 1 < tetrisBoard.length) {
+            shapeErase(counter)
         }
-    } else if (evnt.code == "ArrowRight") {
-        if(square1 < 9) {
-            square1 += 1;
+        square1 -= 1;
+    } 
+    if (square2 > 0) {
+        if (counter + 1 < tetrisBoard.length) {
+            shapeErase(counter)
         }
-        if(square2 < 8) {
-            square2 += 1;
-        }
+        square2 -= 1;
     }
+} else if (evnt.code == "ArrowRight") {
+    if(square1 < 9) {
+        if (counter + 1 < tetrisBoard.length) {
+            shapeErase(counter)
+        }
+        square1 += 1;
+    }
+    if(square2 < 8) {
+        if (counter + 1 < tetrisBoard.length) {
+            shapeErase(counter)
+        }
+        square2 += 1;
+    }
+} 
 })
 
+
+const shapeFuncArr = [
+    smashBoyShaper, 
+    orangeRickyShaper,
+]
+
+function render() {
+    shapeFuncArr[0]()
+}
+
+render()
 
 //eventlistener for the 3 music options
