@@ -60,13 +60,17 @@ function scoreTracker(x) {
 function squareShaper(y, x) {
     let i = 0;
     let z = setInterval(function() {
-        //switches boardstatus container, the previous shape location value back to 0
+        //switches board states to 0
         if(i >= 1) {
             shapeErase(i)
             for(j = 0; j < tetrisBoard.length; j++) {
                 tetrisBoard[i - 1][j] = 0;
             }
         }
+
+        // need the event listeners in here, and the erase function has to run inside the keystrokes just before the switch the square1 & 2 vars
+        //
+        //
         //switches board states to 1, going down
         tetrisBoard[0 + i][square1] = 1
         tetrisBoard[0 + i][square2]  = 1
