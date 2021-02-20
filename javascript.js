@@ -12,27 +12,20 @@ let tetrisBoard = [
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    
 ]
-let scoreTotal = 0;
 
-
-//VARS
-//each object shape will have a variable to hold it in
-let sS = [];
-let sLL = [];
-let sLR = [];
-let sT = [];
-let sI = [];
-let shapeArr = [sS, sLL, sLR, sT, sI]
-
-
-//variables to hold dom objects (used to move the block left or right, to flip. dom objects to select score, start button, play music button)
 let squares = document.getElementById("boardplate")
-
-
-
-//FUNCTIONS
-//creates grid+
 function cGrid (x) { 
     for(i = 1; i <= x; i++) {
         let g = document.createElement("div");
@@ -44,8 +37,21 @@ function cGrid (x) {
 cGrid(200);
 
 
+
+//VARS
+//starting positions for each block
+let square1 = 5
+let square2 = 4
+
+//variables to hold dom objects 
+
+
+
+
+//FUNCTIONS
 //function to add scores up after each row is completed, up to a max win condition
-function score(x) {
+let scoreTotal = 0;
+function scoreTracker(x) {
     scoreTotal += x;
     return scoreTotal;
 }
@@ -54,36 +60,53 @@ function score(x) {
 function squareShaper(y, x) {
     let i = 0;
     let z = setInterval(function() {
-        //switches any previous boardstatus container the previoys shape location back to 0
-        if(i > 2) {
-            for(j = 0; j < 10; j++) {
-                tetrisBoard[i- 1][j] = 0;
+        //switches boardstatus container, the previous shape location value back to 0
+        if(i >= 1) {
+            shapeErase(i)
+            for(j = 0; j < tetrisBoard.length; j++) {
+                tetrisBoard[i - 1][j] = 0;
             }
         }
-        //switches board status to 1, going down
-        tetrisBoard[0 + i][4 - y + x] = 1
-        tetrisBoard[0 + i][5 - y + x]  = 1
-        tetrisBoard[1 + i][4 - y + x] = 1
-        tetrisBoard[1 + i][5 - y + x] = 1
-        console.log(tetrisBoard[3])
+        //switches board states to 1, going down
+        tetrisBoard[0 + i][square1] = 1
+        tetrisBoard[0 + i][square2]  = 1
+        tetrisBoard[1 + i][square1] = 1
+        tetrisBoard[1 + i][square2] = 1
         i += 1;
-        if (i + 1 >= 10) {
+        shapeDisplay(i)
+        if (i + 1 >= tetrisBoard.length) {
             clearInterval(z);
             return;
         }
-        }, 1000)   
+    }, 300)   
 }
-squareShaper(0, 0);
+squareShaper();
 
 
-function shapeMaker() {
+function shapeDisplay(x) {
+    let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + square1 + 1] + ")") 
+    let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + square2 + 1] + ")") 
+    let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [x * 10 + square1 + 1] + ")") 
+    let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [x * 10 + square2 + 1] + ")") 
+    blockLight.classList.add("blockpiece")
+    blockLight2.classList.add("blockpiece")
+    blockLight3.classList.add("blockpiece")
+    blockLight4.classList.add("blockpiece")
+}
 
+function shapeErase(x) {
+    let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + square1 + 1] + ")") 
+    let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [[x - 1 ] * 10 + square2 + 1] + ")") 
+    let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [x * 10 + square1 + 1] + ")") 
+    let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [x * 10 + square2 + 1] + ")")
+    blockLight.classList.remove("blockpiece")
+    blockLight2.classList.remove("blockpiece")
+    blockLight3.classList.remove("blockpiece")
+    blockLight4.classList.remove("blockpiece") 
 }
 
 //console.log(tetrisBoard)
 //function to move the object down a space in the grid every interval of time
-//function to move the block left
-//function to move the block right
 //function to flip the block
 //function to check to see if a full row of grid elements are all switched to 1, and then switches all values to 0 & deletes blocks
 //function to check to see if any grid elements at the top are switched to 1, prompting lose condition
@@ -93,35 +116,34 @@ function shapeMaker() {
 
 
 
-//EVENTLISTENERS
-squares.addEventListener("click", function(evnt) {
-    let click = evnt.target
-    console.log(click);
-    if(click.classList.contains("blockpiece")) {
-        click.classList.remove("blockpiece")
-    } else {
-        click.classList.add("blockpiece")
+// //EVENTLISTENERS
+// squares.addEventListener("click", function(evnt) {
+//     let click = evnt.target
+//     console.log(click);
+//     if(click.classList.contains("blockpiece")) {
+//         click.classList.remove("blockpiece")
+//     } else {
+//         click.classList.add("blockpiece")
+//     }
+// })
+//event listeners for left arrow & right arrow, and for spacebar/click to flip object
+document.addEventListener("keydown", function(evnt) {
+    if(evnt.code == "ArrowLeft") {
+        if (square1 > 1) {
+            square1 -= 1;
+        } 
+        if (square2 > 0) {
+            square2 -= 1;
+        }
+    } else if (evnt.code == "ArrowRight") {
+        if(square1 < 9) {
+            square1 += 1;
+        }
+        if(square2 < 8) {
+            square2 += 1;
+        }
     }
 })
 
-//event listeners for left arrow & right arrow, and for spacebar/click to flip object
+
 //eventlistener for the 3 music options
-
-
-
-
-
-
-
-/// EXTRA blocks of code
-        //originally updated the visuals (css)
-        // for(i = 0; i < tetrisBoard.length; i++) {
-        //         let block1 = document.getElementById( + "5");
-        //         let block2 = document.getElementById("6");
-        //         let block3 = document.getElementById("15");
-        //         let block4 = document.getElementById("16");
-        //         block1.classList.add("blockpiece")
-        //         block2.classList.add("blockpiece")
-        //         block3.classList.add("blockpiece")
-        //         block4.classList.add("blockpiece")
-        //         console.log("test")
