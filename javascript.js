@@ -49,7 +49,7 @@ let currentShape = 0;
 
 //variables for tracking & altering shape flips.  plus odd shapes.
 let threeWide = 0;
-let fourWide = 0;
+let rightBumper = 0;
 
 
 //functions that effect the board state, each shape
@@ -149,6 +149,7 @@ function resetStates(z) {
     displayXAxis = 5;
     currentShape = 0;
     threeWide = 0;
+    rightBumper = 0;
     clearInterval(z);
 }
 
@@ -165,7 +166,12 @@ function smashBoyShaper() {
         i += 1;
         counter += 1;
         smashBoyDisplay(i)
-        if (i + 1 >= tetrisBoard.length) {
+        if (i < tetrisBoard.length - 1) {
+            if (tetrisBoard[i + 1][xAxis] === 1 || tetrisBoard[i + 1][xAxis + 1] === 1) {
+                resetStates(z);
+                return;
+            }
+        } else {
             resetStates(z);
             return;
         }
@@ -184,9 +190,14 @@ function orangeRickyShaper() {
         i += 1;
         counter += 1;
         orangeRickyDisplay(i)
-        if (i + 2 >= tetrisBoard.length) {
+        if (i + 2 < tetrisBoard.length) {
+            if (tetrisBoard[i + 2][xAxis] === 1 || tetrisBoard[i + 2][xAxis + 1] === 1) {
+                resetStates(z);
+                return;
+            }
+        } else {
             resetStates(z)
-            return;
+                return;
         }
     }, 100)   
 }
@@ -203,9 +214,14 @@ function blueRickyShaper() {
         i += 1;
         counter += 1;
         blueRickyDisplay(i)
-        if (i + 2 >= tetrisBoard.length) {
+        if (i + 2 < tetrisBoard.length) {
+            if (tetrisBoard[i + 2][xAxis] === 1 || tetrisBoard[i + 2][xAxis + 1] === 1) {
+                resetStates(z);
+                return;
+            }
+        } else {
             resetStates(z)
-            return;
+                return;
         }
     }, 100)   
 }
@@ -223,15 +239,21 @@ function clevelandZShaper() {
         i += 1;
         counter += 1;
         clevelandZDisplay(i)
-        if (i + 1 >= tetrisBoard.length) {
+        if (i + 1 < tetrisBoard.length) {
+            if (tetrisBoard[i][xAxis] === 1 || tetrisBoard[i + 1][xAxis + 1] === 1 || tetrisBoard[i + 1][xAxis + 2]) {
+                resetStates(z);
+                return;
+            }
+        } else {
             resetStates(z)
-            return;
+                return;
         }
     }, 100)   
 }
 function rhodeIslandZShaper() {
     threeWide = 1;
     currentShape = 5;
+    rightBumper = -1;
     counter = 0;
     let i = 0;
     let z = setInterval(function() {
@@ -243,9 +265,14 @@ function rhodeIslandZShaper() {
         i += 1;
         counter += 1;
         rhodeIslandZDisplay(i)
-        if (i + 1 >= tetrisBoard.length) {
+        if (i + 1 < tetrisBoard.length) {
+            if (tetrisBoard[i + 1 ][xAxis] === 1 || tetrisBoard[i + 1][xAxis + 1] === 1 || tetrisBoard[i][xAxis + 2] === 1) {
+                resetStates(z);
+                return;
+            }
+        } else {
             resetStates(z)
-            return;
+                return;
         }
     }, 100)   
 }
@@ -263,9 +290,14 @@ function heroShaper() {
         i += 1;
         counter += 1;
         heroDisplay(i)
-        if (i + 3 >= tetrisBoard.length) {
+        if (i + 3 < tetrisBoard.length) {
+            if (tetrisBoard[i + 3][xAxis] === 1) {
+                resetStates(z);
+                return;
+            }
+        } else {
             resetStates(z)
-            return;
+                return;
         }
     }, 100)   
 }
@@ -283,9 +315,14 @@ function teeWeeShaper() {
         i += 1;
         counter += 1;
         teeWeeDisplay(i)
-        if (i + 1 >= tetrisBoard.length) {
+        if (i + 1 < tetrisBoard.length) {
+            if (tetrisBoard[i][xAxis] === 1 || tetrisBoard[i + 1][xAxis + 1] === 1 || tetrisBoard[i][xAxis + 2]) {
+                resetStates(z);
+                return;
+            }
+        } else {
             resetStates(z)
-            return;
+                return;
         }
     }, 100)   
 }
@@ -414,25 +451,28 @@ function shapeErase(x) {
 document.addEventListener("keydown", function(evnt) {
     if(evnt.code == "ArrowLeft") {
         if (xAxis > 0) {
-            if ([counter + 1] < tetrisBoard.length) {
-                shapeErase(counter)
-                boardStateEraser(counter)
-                xAxis -= 1;
-                displayXAxis -=1;
-                return;
+            if (currentShape > 0) {
+                
+                if ([counter + 1] < tetrisBoard.length && tetrisBoard[counter + 1][xAxis - 1] === 0 && tetrisBoard[counter][xAxis - 1] === 0) {
+                    shapeErase(counter)
+                    boardStateEraser(counter)
+                    xAxis -= 1;
+                    displayXAxis -=1;
+                    return;
+                }
             }
         } 
     } else if (evnt.code == "ArrowRight") {
-        if([xAxis + threeWide] < 8) {
-            if ([counter + 1] < tetrisBoard.length) {
-                shapeErase(counter)
-                boardStateEraser(counter)
-                console.log(tetrisBoard)
-                xAxis += 1;
-                displayXAxis += 1;
-                return;
-            }
-            
+        if(currentShape > 0) {
+            if([xAxis + threeWide] < 8) {
+                if ([counter + 1] < tetrisBoard.length && tetrisBoard[counter + 1][xAxis + threeWide + 2] == 0 && tetrisBoard[counter + 2][xAxis + threeWide + 2] === 0) {
+                    shapeErase(counter)
+                    boardStateEraser(counter)
+                    xAxis += 1;
+                    displayXAxis += 1;
+                    return;
+                }
+            }            
         } else {
             return;
         }
@@ -455,8 +495,12 @@ const shapeFuncArr = [
 function render() {
     shapeFuncArr[Math.floor(Math.random() * shapeFuncArr.length)]();
 }
+
+ 
 //render()
 setInterval(render, 2400)
+//smashBoyShaper()
+//setInterval(teeWeeShaper, 2400)
 
 
 //eventlistener for the 3 music options
