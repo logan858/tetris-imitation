@@ -48,6 +48,7 @@ cGrid(200);
 
 //VARS
 //starting positions for each block on the x axis
+let xAxis = 4
 let square1 = 5
 let square2 = 4
 let counter = 0
@@ -55,10 +56,10 @@ let scoreTotal = 0;
 let currentShape = 0;
 //variables to hold dom objects 
 function smashBoy(i) {
-    tetrisBoard[0 + i][square1] = 1
-    tetrisBoard[0 + i][square2]  = 1
-    tetrisBoard[1 + i][square1] = 1
-    tetrisBoard[1 + i][square2] = 1
+    tetrisBoard[0 + i][xAxis] = 1
+    tetrisBoard[0 + i][xAxis + 1]  = 1
+    tetrisBoard[1 + i][xAxis] = 1
+    tetrisBoard[1 + i][xAxis + 1] = 1
 }
 function orangeRicky(i) {
     tetrisBoard[0 + i][square2] = 1
