@@ -40,16 +40,18 @@ function cGrid (x) {
     }
 }
 cGrid(200);
-
-//VARS
 //starting positions for each block on the x axis
 let xAxis = 4;
-let yAxis = 0;
 let = displayXAxis = 5;
-let boardYAxis = 0;
 let counter = 0;
 let scoreTotal = 0;
 let currentShape = 0;
+
+//variables for tracking & altering shape flips.  plus odd shapes.
+let threeWide = 0;
+let fourWide = 0;
+
+
 //functions that effect the board state, each shape
 function smashBoy(i) {
     tetrisBoard[i][xAxis] = 1
@@ -146,6 +148,7 @@ function resetStates(z) {
     xAxis = 4;
     displayXAxis = 5;
     currentShape = 0;
+    threeWide = 0;
     clearInterval(z);
 }
 
@@ -163,8 +166,7 @@ function smashBoyShaper() {
         counter += 1;
         smashBoyDisplay(i)
         if (i + 1 >= tetrisBoard.length) {
-            clearInterval(z);
-            currentShape = 0;
+            resetStates(z);
             return;
         }
     }, 100)   
@@ -208,6 +210,7 @@ function blueRickyShaper() {
     }, 100)   
 }
 function clevelandZShaper() {
+    threeWide = 1;
     currentShape = 4;
     counter = 0;
     let i = 0;
@@ -227,6 +230,7 @@ function clevelandZShaper() {
     }, 100)   
 }
 function rhodeIslandZShaper() {
+    threeWide = 1;
     currentShape = 5;
     counter = 0;
     let i = 0;
@@ -246,6 +250,7 @@ function rhodeIslandZShaper() {
     }, 100)   
 }
 function heroShaper() {
+    threeWide = -1
     currentShape = 6;
     counter = 0;
     let i = 0;
@@ -265,6 +270,7 @@ function heroShaper() {
     }, 100)   
 }
 function teeWeeShaper() {
+    threeWide = 1;
     currentShape = 7;
     counter = 0;
     let i = 0;
@@ -411,18 +417,24 @@ document.addEventListener("keydown", function(evnt) {
             if ([counter + 1] < tetrisBoard.length) {
                 shapeErase(counter)
                 boardStateEraser(counter)
+                xAxis -= 1;
+                displayXAxis -=1;
+                return;
             }
-            xAxis -= 1;
-            displayXAxis -=1;
         } 
     } else if (evnt.code == "ArrowRight") {
-        if(xAxis < 8) {
+        if([xAxis + threeWide] < 8) {
             if ([counter + 1] < tetrisBoard.length) {
                 shapeErase(counter)
                 boardStateEraser(counter)
+                console.log(tetrisBoard)
+                xAxis += 1;
+                displayXAxis += 1;
+                return;
             }
-            xAxis += 1;
-            displayXAxis += 1;
+            
+        } else {
+            return;
         }
     } 
 })
