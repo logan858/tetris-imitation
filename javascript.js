@@ -869,14 +869,14 @@ function countDown() {
 start.addEventListener("click", function(event) {
    if(gameOn == 0) {
        countDown()
-       setInterval(render, 2150)
+       setInterval(render, 3000)
    }
 })
 
-setInterval(teeWeeShaper, 3000);
-reset.addEventListener("click", function() {
-    location.reload()
-});
+// setInterval(render, 3000);
+// reset.addEventListener("click", function() {
+//     location.reload()
+// });
 
 
 //eventlistener for the 3 music options
