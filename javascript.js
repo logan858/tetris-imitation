@@ -184,7 +184,7 @@ function resetStates(z) {
     visualY4 = 0;
     visualX4 = 0;
     presses = 0;
-
+    loserCheck();
 }
 function smashBoyShaper() {
     currentShape = 1;
@@ -836,6 +836,20 @@ document.addEventListener("keydown", function(evnt) {
         }
     }
 })
+console.log(tetrisBoard[18].length);
+
+function loserCheck() {
+    for(j = 0; j < tetrisBoard[0].length; j++) {
+        if(tetrisBoard[0][j] === 1) { 
+            let lose1 = document.getElementsByClassName("grid");
+            console.log(lose1.length);
+            reset.classList.add("resetbutton")
+            for(i = 0; i < lose1.length; i++) {
+                lose1[i].classList.add("losingblockpiece")
+            };
+        }         
+    }
+}
 
 
 
@@ -873,10 +887,9 @@ start.addEventListener("click", function(event) {
    }
 })
 
-// setInterval(render, 3000);
-// reset.addEventListener("click", function() {
-//     location.reload()
-// });
+reset.addEventListener("click", function() {
+     location.reload()
+});
 
 
 //eventlistener for the 3 music options
