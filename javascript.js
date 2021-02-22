@@ -57,6 +57,18 @@ let gameOn = 0;
 //variables for tracking & altering shape flips.  plus odd shapes.
 let threeWide = 0;
 let rightBumper = 0;
+//variables for flipping shapes
+let visualY = 0;
+let visualX = 0;
+let visualY2 = 0;
+let visualX2 = 0;
+let visualY3 = 0;
+let visualX3 = 0;
+let visualY4 = 0;
+let visualX4 = 0;
+let statesY1 = 0;
+let statesTwo = 0;
+let statesThree = 0;
 
 
 //functions that effect the board state, each shape
@@ -67,16 +79,16 @@ function smashBoy(i) {
     tetrisBoard[i + 1][xAxis + 1] = 1
 }
 function orangeRicky(i) {
-    tetrisBoard[i][xAxis] = 1
-    tetrisBoard[i + 1][xAxis]  = 1
-    tetrisBoard[i + 2][xAxis] = 1
-    tetrisBoard[i + 2][xAxis + 1] = 1
+    tetrisBoard[i + visualY][xAxis + visualX] = 1
+    tetrisBoard[i + 1 + visualY2][xAxis + visualX2]  = 1
+    tetrisBoard[i + 2 + visualY3][xAxis + visualX3] = 1
+    tetrisBoard[i + 2 + visualY4][xAxis + 1 + visualX4] = 1
 }
 function blueRicky(i) {
-    tetrisBoard[i][xAxis + 1] = 1
-    tetrisBoard[i + 1][xAxis + 1]  = 1
-    tetrisBoard[i + 2][xAxis + 1] = 1
-    tetrisBoard[i + 2][xAxis] = 1
+    tetrisBoard[i + visualY][xAxis + 1 + visualX] = 1
+    tetrisBoard[i + 1 + visualY2][xAxis + 1 + visualX2]  = 1
+    tetrisBoard[i + 2 + visualY3][xAxis + 1 + visualX3] = 1
+    tetrisBoard[i + 2 + visualY4][xAxis + visualX4] = 1
 }
 function clevelandZ(i) {
     tetrisBoard[i][xAxis] = 1
@@ -110,15 +122,15 @@ function boardStateEraser(i) {
         tetrisBoard[i - 1][xAxis + 1]  = 0
         tetrisBoard[i][xAxis + 1] = 0
     } else if(currentShape == 2) {
-        tetrisBoard[i - 1][xAxis] = 0
-        tetrisBoard[i][xAxis]  = 0
-        tetrisBoard[i + 1][xAxis] = 0
-        tetrisBoard[i + 1][xAxis + 1] = 0
+        tetrisBoard[i - 1 + visualY][xAxis + visualX] = 0
+        tetrisBoard[i + visualY2][xAxis + visualX2]  = 0
+        tetrisBoard[i + 1 + visualY3][xAxis + visualX3] = 0
+        tetrisBoard[i + 1 + visualY4][xAxis + 1 + visualX4] = 0
     } else if(currentShape == 3) {
-        tetrisBoard[i - 1][xAxis + 1] = 0
-        tetrisBoard[i][xAxis + 1]  = 0
-        tetrisBoard[i + 1][xAxis + 1] = 0
-        tetrisBoard[i + 1][xAxis] = 0
+        tetrisBoard[i - 1 + visualY][xAxis + 1 + visualX] = 0
+        tetrisBoard[i + visualY2][xAxis + 1 + visualX2]  = 0
+        tetrisBoard[i + 1 + visualY3][xAxis + 1 + visualX3] = 0
+        tetrisBoard[i + 1 + visualY4][xAxis + visualX4] = 0
     } else if(currentShape == 4) {
         tetrisBoard[i - 1][xAxis] = 0
         tetrisBoard[i - 1][xAxis + 1] = 0
@@ -160,10 +172,23 @@ function resetStates(z) {
     clearInterval(z);
     scoreTotal += 25;
     blockCounter += 1;
-}
+    statesOne = 0;
+    statesTwo = 0;
+    statesThree = 0;
+    visualY = 0;
+    visualX = 0;
+    visualY2 = 0;
+    visualX2 = 0;
+    visualY3 = 0;
+    visualX3 = 0;
+    visualY4 = 0;
+    visualX4 = 0;
+    presses = 0;
 
+}
 function smashBoyShaper() {
     currentShape = 1;
+
     counter = 0;
     let i = 0;
     let z = setInterval(function() {
@@ -184,7 +209,7 @@ function smashBoyShaper() {
             resetStates(z);
             return;
         }
-    }, 100)   
+    }, 150)   
 }
 function orangeRickyShaper() {
     currentShape = 2;
@@ -200,15 +225,32 @@ function orangeRickyShaper() {
         counter += 1;
         orangeRickyDisplay(i)
         if (i + 2 < tetrisBoard.length) {
-            if (tetrisBoard[i + 2][xAxis] === 1 || tetrisBoard[i + 2][xAxis + 1] === 1) {
-                resetStates(z);
-                return;
+            if(presses == 0) {
+                if (tetrisBoard[i + 2][xAxis] === 1 || tetrisBoard[i + 2][xAxis + 1] === 1) {
+                    resetStates(z);
+                    return;
+                }
+            } else if(presses == 1) {
+                if (tetrisBoard[i + 2][xAxis] === 1 || tetrisBoard[i + 1][xAxis + 1] === 1 || tetrisBoard[i + 1][xAxis + 2] === 1) {
+                    resetStates(z);
+                    return;
+                }
+            } else if(presses == 2) {
+                if (tetrisBoard[i + 2][xAxis + 1] === 1 || tetrisBoard[i][xAxis] === 1) {
+                    resetStates(z);
+                    return;
+                }
+            } else if(presses == 3) {
+                if (tetrisBoard[i + 2][xAxis] === 1 || tetrisBoard[i + 2][xAxis + 1] === 1 || tetrisBoard[i + 2][xAxis + 2]  === 1) {
+                    resetStates(z);
+                    return;
+                }
             }
-        } else {
-            resetStates(z)
-                return;
-        }
-    }, 100)   
+            } else {
+                resetStates(z)
+                    return;
+            }
+    }, 150)   
 }
 function blueRickyShaper() {
     currentShape = 3;
@@ -232,7 +274,7 @@ function blueRickyShaper() {
             resetStates(z)
                 return;
         }
-    }, 100)   
+    }, 150)   
 }
 function clevelandZShaper() {
     threeWide = 1;
@@ -257,7 +299,7 @@ function clevelandZShaper() {
             resetStates(z)
                 return;
         }
-    }, 100)   
+    }, 150)   
 }
 function rhodeIslandZShaper() {
     threeWide = 1;
@@ -283,7 +325,7 @@ function rhodeIslandZShaper() {
             resetStates(z)
                 return;
         }
-    }, 100)   
+    }, 150)   
 }
 function heroShaper() {
     threeWide = -1
@@ -306,9 +348,9 @@ function heroShaper() {
             }
         } else {
             resetStates(z)
-                return;
+            return;
         }
-    }, 100)   
+    }, 150)   
 }
 function teeWeeShaper() {
     threeWide = 1;
@@ -333,7 +375,7 @@ function teeWeeShaper() {
             resetStates(z)
                 return;
         }
-    }, 100)   
+    }, 150)   
 }
 
 //Visual functions that add visual css classlists, & remove them
@@ -346,18 +388,18 @@ function smashBoyDisplay(x) {
     smashBoy.forEach(ele => ele.classList.add("blockpiece"))
 }
 function orangeRickyDisplay(x) {
-    let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + displayXAxis] + ")") 
-    let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [x * 10 + displayXAxis] + ")") 
-    let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [[x + 1] * 10 + displayXAxis] + ")") 
-    let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [[x + 1] * 10 + displayXAxis + 1] + ")") 
+    let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1 + visualY] * 10 + displayXAxis + visualX] + ")") 
+    let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [[x + visualY2] * 10 + displayXAxis + visualX2] + ")") 
+    let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [[x + 1 + visualY3] * 10 + displayXAxis + visualX3] + ")") 
+    let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [[x + 1 + visualY4] * 10 + displayXAxis + 1 + visualX4] + ")") 
     let orangeRicky = [blockLight, blockLight2, blockLight3, blockLight4]
     orangeRicky.forEach(ele => ele.classList.add("blockpiece"))
 }
 function blueRickyDisplay(x) {
-    let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + displayXAxis + 1] + ")") 
-    let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [x * 10 + displayXAxis + 1] + ")") 
-    let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [[x + 1] * 10 + displayXAxis + 1] + ")") 
-    let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [[x + 1] * 10 + displayXAxis] + ")") 
+    let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1 + visualY] * 10 + displayXAxis + 1 + visualX] + ")") 
+    let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [[x + visualY2] * 10 + displayXAxis + 1 + visualX2] + ")") 
+    let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [[x + 1 + visualY3] * 10 + displayXAxis + 1 + visualX3] + ")") 
+    let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [[x + 1 + visualY4] * 10 + displayXAxis + visualX4] + ")") 
     let orangeRicky = [blockLight, blockLight2, blockLight3, blockLight4]
     orangeRicky.forEach(ele => ele.classList.add("blockpiece"))
 }
@@ -404,17 +446,17 @@ function shapeErase(x) {
         let smashBoy = [blockLight, blockLight2, blockLight3, blockLight4]
         smashBoy.forEach(ele => ele.classList.remove("blockpiece"))
     } else if (currentShape == 2) {
-        let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + displayXAxis] + ")") 
-        let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [x * 10 + displayXAxis] + ")") 
-        let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [[x + 1] * 10 + displayXAxis] + ")") 
-        let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [[x + 1] * 10 + displayXAxis + 1] + ")") 
+        let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1 + visualY] * 10 + displayXAxis + visualX] + ")") 
+        let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [[x + visualY2] * 10 + displayXAxis + visualX2] + ")") 
+        let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [[x + 1 + visualY3] * 10 + displayXAxis + visualX3] + ")") 
+        let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [[x + 1 + visualY4] * 10 + displayXAxis + 1 + visualX4] + ")") 
         let orangeRicky = [blockLight, blockLight2, blockLight3, blockLight4]
         orangeRicky.forEach(ele => ele.classList.remove("blockpiece"))
     } else if (currentShape == 3) {
-        let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + displayXAxis + 1] + ")") 
-        let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [x * 10 + displayXAxis + 1] + ")") 
-        let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [[x + 1] * 10 + displayXAxis + 1] + ")") 
-        let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [[x + 1] * 10 + displayXAxis] + ")") 
+        let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1 + visualY] * 10 + displayXAxis + 1 + visualX] + ")") 
+        let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [[x + visualY2] * 10 + displayXAxis + 1 + visualX2] + ")") 
+        let blockLight3 = document.querySelector("#boardplate div:nth-child(" + [[x + 1 + visualY3] * 10 + displayXAxis + 1 + visualX3] + ")") 
+        let blockLight4 = document.querySelector("#boardplate div:nth-child(" + [[x + 1 + visualY4] * 10 + displayXAxis + visualX4] + ")") 
         let orangeRicky = [blockLight, blockLight2, blockLight3, blockLight4]
         orangeRicky.forEach(ele => ele.classList.remove("blockpiece"))
     } else if (currentShape == 4) {
@@ -487,6 +529,120 @@ document.addEventListener("keydown", function(evnt) {
         }
     } 
 })
+let presses = 0;
+document.addEventListener("keydown", function(evnt) {
+    if(evnt.code == "Space") {
+        if(currentShape == 2) {
+            if(presses == 0) {
+                shapeErase(counter);
+                boardStateEraser(counter)
+                visualY = 1;
+                visualX = 2;
+                visualY2 = 0;
+                visualX2 = 0;
+                visualY3 = 0;
+                visualX3 = 0;
+                visualY4 = -1;
+                visualX4 = 0;
+                threeWide = 1;
+                presses += 1;
+            } else if(presses == 1) {
+                shapeErase(counter);
+                boardStateEraser(counter)
+                visualY = 0;
+                visualX = 1;
+                visualY2 = 0;
+                visualX2 = 1;
+                visualY3 = -2;
+                visualX3 = 0;
+                visualY4 = 0;
+                visualX4 = 0;
+                threeWide = 0;
+                presses += 1;
+            } else if(presses == 2) {
+                shapeErase(counter);
+                boardStateEraser(counter)
+                visualY = 2;
+                visualX = 0;
+                visualY2 = 0;
+                visualX2 = 2;
+                visualY3 = 0;
+                visualX3 = 1;
+                visualY4 = 0;
+                visualX4 = 1;
+                threeWide = 1;
+                presses += 1;
+            }   else if(presses == 3) {
+                shapeErase(counter);
+                boardStateEraser(counter)
+                visualY = 0;
+                visualX = 0;
+                visualY2 = 0;
+                visualX2 = 0;
+                visualY3 = 0;
+                visualX3 = 0;
+                visualY4 = 0;
+                visualX4 = 0;
+                threeWide = 0;
+                presses = 0;
+            }
+        } else if(currentShape == 3) {
+            if(presses == 0) {
+                shapeErase(counter);
+                boardStateEraser(counter)
+                visualY = 1;
+                visualX = -1;
+                visualY2 = 1;
+                visualX2 = 1;
+                visualY3 = 0;
+                visualX3 = 0;
+                visualY4 = 0;
+                visualX4 = 0;
+                threeWide = 1;
+                presses += 1;
+            } else if(presses == 1) {
+                shapeErase(counter);
+                boardStateEraser(counter)
+                visualY = 0;
+                visualX = 1;
+                visualY2 = 0;
+                visualX2 = 1;
+                visualY3 = -2;
+                visualX3 = 0;
+                visualY4 = 0;
+                visualX4 = 0;
+                threeWide = 0;
+                presses += 1;
+            } else if(presses == 2) {
+                shapeErase(counter);
+                boardStateEraser(counter)
+                visualY = 2;
+                visualX = 0;
+                visualY2 = 0;
+                visualX2 = 2;
+                visualY3 = 0;
+                visualX3 = 1;
+                visualY4 = 0;
+                visualX4 = 1;
+                threeWide = 1;
+                presses += 1;
+            }   else if(presses == 3) {
+                shapeErase(counter);
+                boardStateEraser(counter)
+                visualY = 0;
+                visualX = 0;
+                visualY2 = 0;
+                visualX2 = 0;
+                visualY3 = 0;
+                visualX3 = 0;
+                visualY4 = 0;
+                visualX4 = 0;
+                threeWide = 0;
+                presses = 0;
+            }
+        }
+    }
+})
 
 
 
@@ -521,15 +677,17 @@ function countDown() {
 start.addEventListener("click", function(event) {
    if(gameOn == 0) {
        countDown()
-       setInterval(render, 2400)
+       setInterval(render, 2150)
    }
 })
+
+setInterval(blueRickyShaper, 2800);
 reset.addEventListener("click", function() {
     location.reload()
 });
 
 //smashBoyShaper()
-//setInterval(teeWeeShaper, 2400)
+//setInterval(teeWeeShaper, 2150)
 
 
 //eventlistener for the 3 music options
