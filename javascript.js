@@ -33,6 +33,7 @@ let tetrisBoard = [
 let squares = document.getElementById("boardplate")
 const start = document.getElementById("start")
 const reset = document.getElementById("reset")
+let score = document.getElementById("score")
 
 function cGrid (x) { 
     for(i = 1; i <= x; i++) {
@@ -46,9 +47,10 @@ cGrid(200);
 
 //starting positions for each block on the x axis
 let xAxis = 4;
-let = displayXAxis = 5;
+let displayXAxis = 5;
 let counter = 0;
 let scoreTotal = 0;
+let blockCounter = 0;
 let currentShape = 0;
 let gameOn = 0;
 
@@ -156,6 +158,8 @@ function resetStates(z) {
     threeWide = 0;
     rightBumper = 0;
     clearInterval(z);
+    scoreTotal += 25;
+    blockCounter += 1;
 }
 
 function smashBoyShaper() {
@@ -448,7 +452,7 @@ function shapeErase(x) {
 //function to check to see if a full row of grid elements are all switched to 1, and then switches all values to 0 & deletes blocks
 //function to check to see if any grid elements at the top are switched to 1, prompting lose condition
 //function to check is highscore varialbe hits a certain level, prompting win condition
-
+//score.innerHTML = "<p>" score "</p>";
 
 
 //*********************************************************************************** */ 
