@@ -1,3 +1,6 @@
+html {
+    background-color: rgb(36, 36, 36);
+}
 #title {
     text-align: center;
     margin: 0 auto;
@@ -19,16 +22,46 @@
     grid-column: 1 / 2;
     grid-row: 1 / 4;
     display: grid;
-    grid-template: 1fr 1fr 1fr / 1fr;
+    grid-gap: 5px;
+    grid-template: 2fr 2fr 2fr 1fr / 1fr;
 
 }
 #leftbox1 {
-    background-color: rgba(106, 109, 117, 0.7);
+    background-color: rgba(145, 109, 61, 0.959);
     border: rgba(0,0,0,0.6) solid 1px;
     border-radius: 5px;
     grid-column: 1 / 2;
     grid-row: 1 / 2;
 }
+#leftbox2 {
+    background-color: rgba(61, 114, 145, 0.959);
+    border: rgba(0,0,0,0.6) solid 1px;
+    border-radius: 5px;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+#leftbox3 {
+    background-color: rgba(109, 120, 151, 0.7);
+    border: rgba(0,0,0,0.6) solid 1px;
+    border-radius: 5px;
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+}
+#rightpanel {
+    grid-column: 3 / 4;
+    grid-row: 1 / 4;
+    display: grid;
+    grid-gap: 5px;
+    grid-template: 1fr 1fr / 1fr;
+}
+#rightbox1 {
+    background-color: rgba(110, 55, 53, 0.959);
+    border: rgba(0,0,0,0.4) solid 1px;
+    border-radius: 5px;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
 #boardplate {
     display: grid;
     grid-template-columns: repeat(10,40px);

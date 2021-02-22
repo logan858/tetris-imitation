@@ -31,6 +31,8 @@ let tetrisBoard = [
     [0,0,0,0,0,0,0,0,0,0]
 ]
 let squares = document.getElementById("boardplate")
+const start = document.getElementById("start")
+const reset = document.getElementById("reset")
 function cGrid (x) { 
     for(i = 1; i <= x; i++) {
         let g = document.createElement("div");
@@ -46,6 +48,7 @@ let = displayXAxis = 5;
 let counter = 0;
 let scoreTotal = 0;
 let currentShape = 0;
+let gameOn = 0;
 
 //variables for tracking & altering shape flips.  plus odd shapes.
 let threeWide = 0;
@@ -495,10 +498,26 @@ const shapeFuncArr = [
 function render() {
     shapeFuncArr[Math.floor(Math.random() * shapeFuncArr.length)]();
 }
-
+function countDown() {
+    gameOn = 1;
+    let i = 4;
+    let z = setInterval(function() {
+        i -= 1;
+        start.innerHTML = i;
+        if(i == 0) {
+            start.innerHTML = "BEGIN!";
+            clearInterval(z)
+        }
+        }, 500)
+}
  
 //render()
-setInterval(render, 2400)
+start.addEventListener("click", function(event) {
+   if(gameOn == 0) {
+       countDown()
+       setInterval(render, 2400)
+   }
+})
 //smashBoyShaper()
 //setInterval(teeWeeShaper, 2400)
 
