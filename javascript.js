@@ -33,6 +33,7 @@ let tetrisBoard = [
 let squares = document.getElementById("boardplate")
 const start = document.getElementById("start")
 const reset = document.getElementById("reset")
+
 function cGrid (x) { 
     for(i = 1; i <= x; i++) {
         let g = document.createElement("div");
@@ -42,6 +43,7 @@ function cGrid (x) {
     }
 }
 cGrid(200);
+
 //starting positions for each block on the x axis
 let xAxis = 4;
 let = displayXAxis = 5;
@@ -510,7 +512,7 @@ function countDown() {
         }
         }, 500)
 }
- 
+
 //render()
 start.addEventListener("click", function(event) {
    if(gameOn == 0) {
@@ -518,6 +520,10 @@ start.addEventListener("click", function(event) {
        setInterval(render, 2400)
    }
 })
+reset.addEventListener("click", function() {
+    location.reload()
+});
+
 //smashBoyShaper()
 //setInterval(teeWeeShaper, 2400)
 
