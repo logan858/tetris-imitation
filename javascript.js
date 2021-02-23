@@ -54,6 +54,54 @@ function cGrid (x) {
 }
 cGrid(200);
 
+//eventlisteners & functions for the music options
+let audioOne = document.getElementById("audio1")
+let audioTwo = document.getElementById("audio2")
+let audioThree = document.getElementById("audio3")
+let audioFour = document.getElementById("audio4")
+
+function playAud1() {
+    audioOne.volume = 0.1;
+    audioOne.loop = true;
+    audioOne.play();
+} 
+function pauseAud1() {
+    audioOne.pause();
+} 
+function playAud2() {
+    audioTwo.volume = 0.3;
+    audioTwo.loop = true;
+    audioTwo.play();
+} 
+function pauseAud2() {
+    audioTwo.pause();
+} 
+function playAud3() {
+    audioThree.volume = 0.4;
+    audioThree.loop = true;
+    audioThree.play();
+} 
+function pauseAud3() {
+    audioThree.pause();
+} 
+function playAud4() {
+    audioFour.volume = 0.4;
+    audioFour.loop = true;
+    audioFour.play();
+} 
+function pauseAud4() {
+    audioFour.pause();
+} 
+let buttns = document.querySelectorAll('button')
+buttns[0].addEventListener("click", playAud1);
+buttns[1].addEventListener("click", pauseAud1);
+buttns[2].addEventListener("click", playAud2);
+buttns[3].addEventListener("click", pauseAud2);
+buttns[4].addEventListener("click", playAud3);
+buttns[5].addEventListener("click", pauseAud3);
+buttns[6].addEventListener("click", playAud4);
+buttns[7].addEventListener("click", pauseAud4);
+
 //starting positions for each block on the x axis
 let xAxis = 4;
 let displayXAxis = 5;
@@ -244,12 +292,16 @@ function oneChecker(x) {
     return x == 1;
   }
 function lineClear() {
+    let counter2 = 1;
     for(i = 0; i < tetrisBoard.length; i++) {
+        counter2 = 1;
         let z = tetrisBoard[i].every(oneChecker);
         if(z == true) {
             for(j = 0; j < tetrisBoard[i].length; j++) {
                 tetrisBoard[i][j] = 0;
-                
+                let oneNine = document.getElementById("" + [[i * 10 + counter2]] + "");
+                oneNine.classList.remove("blockpiece")
+                counter2 += 1;
             }
             linesRem -= 1;
         }
@@ -930,53 +982,3 @@ const shapeFuncArr = [
 function render() {
     shapeFuncArr[Math.floor(Math.random() * shapeFuncArr.length)]();
 }
-
-
-
-//eventlisteners & functions for the music options
-let audioOne = document.getElementById("audio1")
-let audioTwo = document.getElementById("audio2")
-let audioThree = document.getElementById("audio3")
-let audioFour = document.getElementById("audio4")
-
-function playAud1() {
-    audioOne.volume = 0.1;
-    audioOne.loop = true;
-    audioOne.play();
-} 
-function pauseAud1() {
-    audioOne.pause();
-} 
-function playAud2() {
-    audioTwo.volume = 0.3;
-    audioTwo.loop = true;
-    audioTwo.play();
-} 
-function pauseAud2() {
-    audioTwo.pause();
-} 
-function playAud3() {
-    audioThree.volume = 0.4;
-    audioThree.loop = true;
-    audioThree.play();
-} 
-function pauseAud3() {
-    audioThree.pause();
-} 
-function playAud4() {
-    audioFour.volume = 0.4;
-    audioFour.loop = true;
-    audioFour.play();
-} 
-function pauseAud4() {
-    audioFour.pause();
-} 
-let buttns = document.querySelectorAll('button')
-buttns[0].addEventListener("click", playAud1);
-buttns[1].addEventListener("click", pauseAud1);
-buttns[2].addEventListener("click", playAud2);
-buttns[3].addEventListener("click", pauseAud2);
-buttns[4].addEventListener("click", playAud3);
-buttns[5].addEventListener("click", pauseAud3);
-buttns[6].addEventListener("click", playAud4);
-buttns[7].addEventListener("click", pauseAud4);
