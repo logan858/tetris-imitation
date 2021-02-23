@@ -107,14 +107,14 @@ let xAxis = 4;
 let displayXAxis = 5;
 let counter = 0;
 let scoreTotal = 0;
-let linesRem = 10;
+let linesRem = 15;
 let blockCounter = 0;
 let shapeCounts = [0, 0, 0, 0, 0, 0, 0]
 let currentShape = 0;
 let gameOn = 0;
 score.textContent = "score: - "
 totalBlocks.textContent = "total blocks: - " 
-linesRemaining.textContent = "lines remaining: 10"
+linesRemaining.textContent = "lines remaining: 15"
 
 //variables for tracking & altering shape flips.  plus odd shapes.
 let threeWide = 0;
@@ -225,6 +225,7 @@ function resetStates(z) {
     threeWide = 0;
     rightBumper = 0;
     clearInterval(z);
+    lineClear();
     visualY = 0;
     visualX = 0;
     visualY2 = 0;
@@ -234,7 +235,7 @@ function resetStates(z) {
     visualY4 = 0;
     visualX4 = 0;
     presses = 0;
-    lineClear()
+    winnerCheck();
     loserCheck();
 }
 function blockCounters() {
@@ -256,7 +257,6 @@ function blockCounters() {
         shapeCounts[6] += 1;
     }
     score.textContent = "score: " + scoreTotal; 
-    linesRemaining.textContent = "lines remaining: " + linesRem;
     totalBlocks.textContent = "total blocks: " + blockCounter;
     sB.textContent = "smash boy: " + shapeCounts[0];
     oR.textContent = "orange ricky: " + shapeCounts[1];
@@ -274,11 +274,26 @@ function loserCheck() {
             for(i = 0; i < lose1.length; i++) {
                 lose1[i].classList.add("losingblockpiece")
             };
+            start.innerHTML = "YOU LOSE!";
+            gameOn = 0;
         }         
     }
 }
+function winnerCheck(z) {
+    if(linesRem <= 0) {
+        for(i = 1; i < 201; i++) {
+           let winElies = document.querySelector("#boardplate div:nth-child(" + i + ")");
+           winElies.style.backgroundColor = winColors[Math.floor(Math.random() * winColors.length)];
+           start.innerHTML = "YOU WIN!";
+           reset.classList.add("resetbutton")
+        }
+    gameOn = 0;
+    }
+}
+const winColors = [
+    "rgba(110, 55, 53, 0.959)", "rgba(61, 114, 145, 0.959)", "rgba(145, 109, 61, 0.959)", "rgba(61, 145, 117, 0.959)", "rgba(109, 120, 151, 0.7)", 
+]
 function countDown() {
-    gameOn = 1;
     let i = 4;
     let z = setInterval(function() {
         i -= 1;
@@ -298,6 +313,10 @@ function lineClear() {
         counter2 = 1;
         let z = tetrisBoard[i].every(oneChecker);
         if(z == true) {
+            scoreTotal += 100;
+            score.textContent = "score: " + scoreTotal; 
+            linesRem -= 1;
+            linesRemaining.textContent = "lines remaining: " + linesRem;
             for(j = 0; j < tetrisBoard[i].length; j++) {
                 tetrisBoard[i][j] = 0;
                 let oneNine = document.getElementById("" + [[i * 10 + counter2]] + "");
@@ -306,8 +325,6 @@ function lineClear() {
                 counter2 += 1;
                 lineMoverState(i, j)
             }
-            linesRem -= 1;
-            console.log(tetrisBoard)
         }
     }
 }
@@ -734,7 +751,7 @@ let presses = 0;
 document.addEventListener("keydown", function(evnt) {
     if(evnt.code == "Space") {
         if(currentShape == 2) {
-            if(presses == 0) {
+            if(presses == 0 && xAxis + threeWide < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 1;
@@ -760,7 +777,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = 0;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 2) {
+            } else if(presses == 2 && xAxis + threeWide < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 2;
@@ -788,7 +805,7 @@ document.addEventListener("keydown", function(evnt) {
                 presses = 0;
             }
         } else if(currentShape == 3) {
-            if(presses == 0) {
+            if(presses == 0 && xAxis + threeWide < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 1;
@@ -814,7 +831,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = 0;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 2) {
+            } else if(presses == 2 && xAxis + threeWide < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 1;
@@ -855,7 +872,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = -1;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 1) {
+            } else if(presses == 1 && xAxis + threeWide < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter);
                 visualY = 0;
@@ -883,7 +900,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = -2;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 1) {
+            } else if(presses == 1 && xAxis + threeWide < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter);
                 visualY = 0;
@@ -898,7 +915,7 @@ document.addEventListener("keydown", function(evnt) {
                 presses = 0;
             }
         } else if(currentShape == 6) {
-            if(presses == 0) {
+            if(presses == 0 && xAxis + threeWide + 2 < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter);
                 visualY = 3;
@@ -939,7 +956,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = -1;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 1) {
+            } else if(presses == 1 && xAxis + threeWide < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 1;
@@ -965,7 +982,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = -1;
                 threeWide = 0;
                 presses += 1;
-            }   else if(presses == 3) {
+            }   else if(presses == 3 && xAxis + threeWide < 8) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 0;
@@ -996,11 +1013,12 @@ const shapeFuncArr = [
     teeWeeShaper,
 ]
 function render() {
-    shapeFuncArr[Math.floor(Math.random() * shapeFuncArr.length)]();
+    if(gameOn == 1) {
+        shapeFuncArr[Math.floor(Math.random() * shapeFuncArr.length)]();
+    }
 }
 start.addEventListener("click", function(event) {
-    if(gameOn == 0) {
-        countDown()
-        setInterval(render, 3000)
-    }
+    gameOn = 1;
+    countDown()
+    setInterval(render, 3000)
  })
