@@ -32,7 +32,7 @@ let tetrisBoard = [
 ]
 let squares = document.getElementById("boardplate")
 const start = document.getElementById("start")
-const reset = document.getElementById("reset")
+const reset = document.querySelector(".reset")
 let score = document.getElementById("score")
 
 function cGrid (x) { 
@@ -51,6 +51,7 @@ let displayXAxis = 5;
 let counter = 0;
 let scoreTotal = 0;
 let blockCounter = 0;
+let shapeCounts = [0, 0, 0, 0, 0, 0, 0]
 let currentShape = 0;
 let gameOn = 0;
 
@@ -66,9 +67,6 @@ let visualY3 = 0;
 let visualX3 = 0;
 let visualY4 = 0;
 let visualX4 = 0;
-let statesY1 = 0;
-let statesTwo = 0;
-let statesThree = 0;
 
 
 //functions that effect the board state, each shape
@@ -158,23 +156,15 @@ function boardStateEraser(i) {
 
 
 //FUNCTIONS
-//function to add scores up after each row is completed, up to a max win condition
-function scoreTracker(x) {
-    scoreTotal += x;
-    return scoreTotal;
-}
+//function to keep track of game states
 function resetStates(z) {
     xAxis = 4;
     displayXAxis = 5;
+    blockCounters()
     currentShape = 0;
     threeWide = 0;
     rightBumper = 0;
     clearInterval(z);
-    scoreTotal += 25;
-    blockCounter += 1;
-    statesOne = 0;
-    statesTwo = 0;
-    statesThree = 0;
     visualY = 0;
     visualX = 0;
     visualY2 = 0;
@@ -186,6 +176,51 @@ function resetStates(z) {
     presses = 0;
     loserCheck();
 }
+function blockCounters() {
+    blockCounter += 1;
+    scoreTotal += 25;
+    if(currentShape == 1) {
+        shapeCounts[0] += 1;
+    } else if(currentShape == 2) {
+        shapeCounts[1] += 1;
+    } else if(currentShape == 3) {
+        shapeCounts[2] += 1;
+    } else if(currentShape == 4) {
+        shapeCounts[3] += 1;
+    } else if(currentShape == 5) {
+        shapeCounts[4] += 1;
+    } else if(currentShape == 6) {
+        shapeCounts[5] += 1;
+    } else if(currentShape == 7) {
+        shapeCounts[6] += 1;
+    }
+    console.log(shapeCounts, scoreTotal, blockCounter)
+}
+function loserCheck() {
+    for(j = 0; j < tetrisBoard[0].length; j++) {
+        if(tetrisBoard[0][j] === 1) { 
+            let lose1 = document.getElementsByClassName("grid");
+            console.log(lose1.length);
+            reset.classList.add("resetbutton")
+            for(i = 0; i < lose1.length; i++) {
+                lose1[i].classList.add("losingblockpiece")
+            };
+        }         
+    }
+}
+function countDown() {
+    gameOn = 1;
+    let i = 4;
+    let z = setInterval(function() {
+        i -= 1;
+        start.innerHTML = i;
+        if(i == 0) {
+            start.innerHTML = "BEGIN!";
+            clearInterval(z)
+        }
+        }, 500)
+}
+//functions for how each shape behaves
 function smashBoyShaper() {
     currentShape = 1;
 
@@ -836,24 +871,15 @@ document.addEventListener("keydown", function(evnt) {
         }
     }
 })
-console.log(tetrisBoard[18].length);
-
-function loserCheck() {
-    for(j = 0; j < tetrisBoard[0].length; j++) {
-        if(tetrisBoard[0][j] === 1) { 
-            let lose1 = document.getElementsByClassName("grid");
-            console.log(lose1.length);
-            reset.classList.add("resetbutton")
-            for(i = 0; i < lose1.length; i++) {
-                lose1[i].classList.add("losingblockpiece")
-            };
-        }         
+start.addEventListener("click", function(event) {
+    if(gameOn == 0) {
+        countDown()
+        setInterval(render, 3000)
     }
-}
-
-
-
-
+ })
+ reset.addEventListener("click", function() {
+      location.reload()
+ });
 const shapeFuncArr = [
     smashBoyShaper, 
     orangeRickyShaper,
@@ -863,33 +889,10 @@ const shapeFuncArr = [
     heroShaper,
     teeWeeShaper,
 ]
-
 function render() {
     shapeFuncArr[Math.floor(Math.random() * shapeFuncArr.length)]();
 }
-function countDown() {
-    gameOn = 1;
-    let i = 4;
-    let z = setInterval(function() {
-        i -= 1;
-        start.innerHTML = i;
-        if(i == 0) {
-            start.innerHTML = "BEGIN!";
-            clearInterval(z)
-        }
-        }, 500)
-}
 
-start.addEventListener("click", function(event) {
-   if(gameOn == 0) {
-       countDown()
-       setInterval(render, 3000)
-   }
-})
-
-reset.addEventListener("click", function() {
-     location.reload()
-});
 
 
 //eventlistener for the 3 music options
