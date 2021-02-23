@@ -11,7 +11,7 @@ Space bar : flips blocks
 Arrow keys(left & right) : moves blocks left & right
 
 ## Game Link
-
+https://pages.git.generalassemb.ly/loganjm/tetris/
 
 ## Future Enhancements
 * The game requires difficult mode options, to select first the line completion requirements, then speed preferences
