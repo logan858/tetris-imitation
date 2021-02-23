@@ -234,6 +234,7 @@ function resetStates(z) {
     visualY4 = 0;
     visualX4 = 0;
     presses = 0;
+    lineClear()
     loserCheck();
 }
 function blockCounters() {
@@ -301,10 +302,32 @@ function lineClear() {
                 tetrisBoard[i][j] = 0;
                 let oneNine = document.getElementById("" + [[i * 10 + counter2]] + "");
                 oneNine.classList.remove("blockpiece")
+                lineMover(i, counter2)
                 counter2 += 1;
+                lineMoverState(i, j)
             }
             linesRem -= 1;
+            console.log(tetrisBoard)
         }
+    }
+}
+function lineMover(i, count) {
+    for(i; i > 0; i--) {
+        let tenNine = document.getElementById("" + [[[i - 1] * 10 + count]] + "");
+        if(tenNine.classList.contains("blockpiece") == true) {
+            tenNine.classList.remove("blockpiece")
+            tenNine = document.getElementById("" + [[i * 10 + count]] + "");
+            tenNine.classList.add("blockpiece")
+        }
+    }
+}
+function lineMoverState(i, j) {
+    for(i; i > 0; i--) {
+        if(tetrisBoard[i][j] == 1) {
+            tetrisBoard[i][j] = 0;
+            tetrisBoard[i + 1][j] = 1;
+        }
+
     }
 }
 
@@ -325,12 +348,10 @@ function smashBoyShaper() {
         smashBoyDisplay(i)
         if (i < tetrisBoard.length - 1) {
             if (tetrisBoard[i + 1][xAxis] === 1 || tetrisBoard[i + 1][xAxis + 1] === 1) {
-                lineClear() 
                 resetStates(z);
                 return;
             }
         } else {
-            lineClear() 
             resetStates(z);
             return;
         }
@@ -961,12 +982,7 @@ document.addEventListener("keydown", function(evnt) {
         }
     }
 })
-start.addEventListener("click", function(event) {
-    if(gameOn == 0) {
-        countDown()
-        setInterval(smashBoyShaper, 3000)
-    }
- })
+
  reset.addEventListener("click", function() {
       location.reload()
  });
@@ -982,3 +998,9 @@ const shapeFuncArr = [
 function render() {
     shapeFuncArr[Math.floor(Math.random() * shapeFuncArr.length)]();
 }
+start.addEventListener("click", function(event) {
+    if(gameOn == 0) {
+        countDown()
+        setInterval(render, 3000)
+    }
+ })
