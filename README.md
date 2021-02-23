@@ -17,3 +17,8 @@ Arrow keys(left & right) : moves blocks left & right
 * The game requires difficult mode options, to select first the line completion requirements, then speed preferences
 * High score tracking
 * Diagonal movement
+
+### Technologies used
+* javaScript
+* html 
+* css
