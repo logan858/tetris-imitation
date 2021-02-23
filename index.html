@@ -24,14 +24,40 @@
                     </div>
                 </div>
                 <div id="leftbox2">
-                    <div id="musicbox">
-                        music
+                    <div id="musicbox">music</div>
+                    <div id="musicplayers"> 
+                        <audio id="audio1" autoplay>
+                            <source src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Tetris_theme.ogg" type="audio/mpeg">
+                        </audio>
+                        <button type="button">Theme 1</button>
+                        <button type="button">Pause</button>
+                    </div>
+                    <div id="musicplayers2"> 
+                        <audio id="audio2" autoplay>
+                            <source src="themes/03_-_Tetris_-_NES_-_Music_2.ogg" type="audio/mpeg">
+                        </audio>
+                        <button type="button">Theme 2</button>
+                        <button type="button">Pause</button>
+                    </div>
+                    <div id="musicplayers3"> 
+                        <audio id="audio3" autoplay>
+                            <source src="themes/05_-_Tetris_-_NES_-_Music_3.ogg" type="audio/mpeg">
+                        </audio>
+                        <button type="button">Theme 3</button>
+                        <button type="button">Pause</button>
+                    </div>
+                    <div id="musicplayers4"> 
+                        <audio id="audio4" autoplay>
+                            <source src="themes/01_-_Tetris_-_NES_-_Music_1.ogg" type="audio/mpeg">
+                        </audio>
+                        <button type="button">Theme 4</button>
+                        <button type="button">Pause</button>
                     </div>
                 </div>
                 <div id="leftbox3">
-                    <div id="score">score: </div>
-                    <div id="lines">lines completed:</div>
-                    <div id="totalblocks">total blocks:</div>
+                    <div id="score"></div>
+                    <div id="lines">lines remaining: 10</div>
+                    <div id="totalblocks"></div>
                 </div>
             </div>
             <div id="boardplate">
@@ -40,12 +66,18 @@
             <div id="rightpanel">
                 <div id="rightbox1">
                     <div id="shapecount">
-                        shape count:
+                        shape count
                     </div>  
+                    <div id="smashboy">smash boy: </div>
+                    <div id="orangericky">orange ricky: </div>
+                    <div id="bluericky">blue ricky: </div>
+                    <div id="clevelandz">cleveland z: </div>
+                    <div id="rhodeislandz">rhode island z: </div>
+                    <div id="hero">hero: </div>
+                    <div id="teewee">teewee: </div>
                 </div>
             </div>
         </div>
-        <div>Score:</div>
         <footer></footer>
     </main>
 </body>

@@ -34,6 +34,14 @@ let squares = document.getElementById("boardplate")
 const start = document.getElementById("start")
 const reset = document.querySelector(".reset")
 let score = document.getElementById("score")
+let totalBlocks = document.getElementById("totalblocks")
+let sB = document.getElementById("smashboy")
+let oR = document.getElementById("orangericky")
+let bR = document.getElementById("bluericky")
+let cZ = document.getElementById("clevelandz")
+let riZ = document.getElementById("rhodeislandz")
+let he = document.getElementById("hero")
+let teeW = document.getElementById("teewee")
 
 function cGrid (x) { 
     for(i = 1; i <= x; i++) {
@@ -54,6 +62,8 @@ let blockCounter = 0;
 let shapeCounts = [0, 0, 0, 0, 0, 0, 0]
 let currentShape = 0;
 let gameOn = 0;
+score.textContent = "score: - "
+totalBlocks.textContent = "total blocks: - " 
 
 //variables for tracking & altering shape flips.  plus odd shapes.
 let threeWide = 0;
@@ -67,7 +77,6 @@ let visualY3 = 0;
 let visualX3 = 0;
 let visualY4 = 0;
 let visualX4 = 0;
-
 
 //functions that effect the board state, each shape
 function smashBoy(i) {
@@ -194,7 +203,15 @@ function blockCounters() {
     } else if(currentShape == 7) {
         shapeCounts[6] += 1;
     }
-    console.log(shapeCounts, scoreTotal, blockCounter)
+    score.textContent = "score: " + scoreTotal; 
+    totalBlocks.textContent = "total blocks: " + blockCounter;
+    sB.textContent = "smash boy: " + shapeCounts[0];
+    oR.textContent = "orange ricky: " + shapeCounts[1];
+    bR.textContent = "blue ricky: " + shapeCounts[2];
+    cZ.textContent = "cleveland z: " + shapeCounts[3];
+    riZ.textContent = "rhode island z: " + shapeCounts[4];
+    he.textContent = "hero: " + shapeCounts[5];
+    teeW.textContent = "teewee: " + shapeCounts[6];
 }
 function loserCheck() {
     for(j = 0; j < tetrisBoard[0].length; j++) {
@@ -895,4 +912,50 @@ function render() {
 
 
 
-//eventlistener for the 3 music options
+//eventlistener for the music options
+let audioOne = document.getElementById("audio1")
+let audioTwo = document.getElementById("audio2")
+let audioThree = document.getElementById("audio3")
+let audioFour = document.getElementById("audio4")
+
+function playAud1() {
+    audioOne.volume = 0.4;
+    audioOne.loop = true;
+    audioOne.play();
+} 
+function pauseAud1() {
+    audioOne.pause();
+} 
+function playAud2() {
+    audioTwo.loop = true;
+    audioTwo.play();
+} 
+function pauseAud2() {
+    audioTwo.pause();
+} 
+function playAud3() {
+    audioThree.volume = 1;
+    audioThree.loop = true;
+    audioThree.play();
+} 
+function pauseAud3() {
+    audioThree.pause();
+} 
+function playAud4() {
+    audioFour.volume = 1;
+    audioFour.loop = true;
+    audioFour.play();
+} 
+function pauseAud4() {
+    audioFour.pause();
+} 
+let buttns = document.querySelectorAll('button')
+console.log(buttns);
+buttns[0].addEventListener("click", playAud1);
+buttns[1].addEventListener("click", pauseAud1);
+buttns[2].addEventListener("click", playAud2);
+buttns[3].addEventListener("click", pauseAud2);
+buttns[4].addEventListener("click", playAud3);
+buttns[5].addEventListener("click", pauseAud3);
+buttns[6].addEventListener("click", playAud4);
+buttns[7].addEventListener("click", pauseAud4);
