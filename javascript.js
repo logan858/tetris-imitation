@@ -28,13 +28,14 @@ let tetrisBoard = [
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0]
+    [0,0,0,0,0,0,0,0,0,0],
 ]
 let squares = document.getElementById("boardplate")
 const start = document.getElementById("start")
 const reset = document.querySelector(".reset")
 let score = document.getElementById("score")
 let totalBlocks = document.getElementById("totalblocks")
+let linesRemaining = document.getElementById("lines");
 let sB = document.getElementById("smashboy")
 let oR = document.getElementById("orangericky")
 let bR = document.getElementById("bluericky")
@@ -58,12 +59,14 @@ let xAxis = 4;
 let displayXAxis = 5;
 let counter = 0;
 let scoreTotal = 0;
+let linesRem = 10;
 let blockCounter = 0;
 let shapeCounts = [0, 0, 0, 0, 0, 0, 0]
 let currentShape = 0;
 let gameOn = 0;
 score.textContent = "score: - "
 totalBlocks.textContent = "total blocks: - " 
+linesRemaining.textContent = "lines remaining: 10"
 
 //variables for tracking & altering shape flips.  plus odd shapes.
 let threeWide = 0;
@@ -204,6 +207,7 @@ function blockCounters() {
         shapeCounts[6] += 1;
     }
     score.textContent = "score: " + scoreTotal; 
+    linesRemaining.textContent = "lines remaining: " + linesRem;
     totalBlocks.textContent = "total blocks: " + blockCounter;
     sB.textContent = "smash boy: " + shapeCounts[0];
     oR.textContent = "orange ricky: " + shapeCounts[1];
@@ -217,7 +221,6 @@ function loserCheck() {
     for(j = 0; j < tetrisBoard[0].length; j++) {
         if(tetrisBoard[0][j] === 1) { 
             let lose1 = document.getElementsByClassName("grid");
-            console.log(lose1.length);
             reset.classList.add("resetbutton")
             for(i = 0; i < lose1.length; i++) {
                 lose1[i].classList.add("losingblockpiece")
@@ -237,10 +240,26 @@ function countDown() {
         }
         }, 500)
 }
+function oneChecker(x) {
+    return x == 1;
+  }
+function lineClear() {
+    for(i = 0; i < tetrisBoard.length; i++) {
+        let z = tetrisBoard[i].every(oneChecker);
+        if(z == true) {
+            for(j = 0; j < tetrisBoard[i].length; j++) {
+                tetrisBoard[i][j] = 0;
+                
+            }
+            linesRem -= 1;
+        }
+    }
+}
+
+
 //functions for how each shape behaves
 function smashBoyShaper() {
     currentShape = 1;
-
     counter = 0;
     let i = 0;
     let z = setInterval(function() {
@@ -254,10 +273,12 @@ function smashBoyShaper() {
         smashBoyDisplay(i)
         if (i < tetrisBoard.length - 1) {
             if (tetrisBoard[i + 1][xAxis] === 1 || tetrisBoard[i + 1][xAxis + 1] === 1) {
+                lineClear() 
                 resetStates(z);
                 return;
             }
         } else {
+            lineClear() 
             resetStates(z);
             return;
         }
@@ -882,7 +903,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX3 = 0;
                 visualY4 = 0;
                 visualX4 = 0;
-                threeWide = 3;
+                threeWide = 1;
                 presses = 0;
             }
         }
@@ -891,7 +912,7 @@ document.addEventListener("keydown", function(evnt) {
 start.addEventListener("click", function(event) {
     if(gameOn == 0) {
         countDown()
-        setInterval(render, 3000)
+        setInterval(smashBoyShaper, 3000)
     }
  })
  reset.addEventListener("click", function() {
@@ -912,14 +933,14 @@ function render() {
 
 
 
-//eventlistener for the music options
+//eventlisteners & functions for the music options
 let audioOne = document.getElementById("audio1")
 let audioTwo = document.getElementById("audio2")
 let audioThree = document.getElementById("audio3")
 let audioFour = document.getElementById("audio4")
 
 function playAud1() {
-    audioOne.volume = 0.4;
+    audioOne.volume = 0.1;
     audioOne.loop = true;
     audioOne.play();
 } 
@@ -927,6 +948,7 @@ function pauseAud1() {
     audioOne.pause();
 } 
 function playAud2() {
+    audioTwo.volume = 0.3;
     audioTwo.loop = true;
     audioTwo.play();
 } 
@@ -934,7 +956,7 @@ function pauseAud2() {
     audioTwo.pause();
 } 
 function playAud3() {
-    audioThree.volume = 1;
+    audioThree.volume = 0.4;
     audioThree.loop = true;
     audioThree.play();
 } 
@@ -942,7 +964,7 @@ function pauseAud3() {
     audioThree.pause();
 } 
 function playAud4() {
-    audioFour.volume = 1;
+    audioFour.volume = 0.4;
     audioFour.loop = true;
     audioFour.play();
 } 
@@ -950,7 +972,6 @@ function pauseAud4() {
     audioFour.pause();
 } 
 let buttns = document.querySelectorAll('button')
-console.log(buttns);
 buttns[0].addEventListener("click", playAud1);
 buttns[1].addEventListener("click", pauseAud1);
 buttns[2].addEventListener("click", playAud2);
