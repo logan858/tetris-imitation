@@ -835,7 +835,9 @@ let presses = 0;
 document.addEventListener("keydown", function(evnt) {
     if(evnt.code == "Space" || evnt.code == "ShiftLeft") {
         if(currentShape == 2) {
-            if(presses == 0 && xAxis + threeWide < 8) {
+            if(presses == 0 && xAxis + threeWide < 8 && tetrisBoard[counter + 1][xAxis + 2] == 0) {
+                console.log(counter)
+                console.log(xAxis)
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 1;
@@ -848,7 +850,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = 0;
                 threeWide = 1;
                 presses += 1;
-            } else if(presses == 1) {
+            } else if(presses == 1 && tetrisBoard[counter + 2][xAxis + 1] == 0) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 0;
@@ -861,7 +863,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = 0;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 2 && xAxis + threeWide < 8) {
+            } else if(presses == 2 && xAxis + threeWide < 8 && tetrisBoard[counter][xAxis + 2] == 0 && tetrisBoard[counter + 1][xAxis + 2] == 0 && tetrisBoard[counter + 2][xAxis + 2] == 0) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 2;
@@ -889,8 +891,8 @@ document.addEventListener("keydown", function(evnt) {
                 presses = 0;
             }
         } else if(currentShape == 3) {
-            if(presses == 0 && xAxis + threeWide < 8) {
-                shapeErase(counter);
+            if(presses == 0 && xAxis + threeWide < 8 && tetrisBoard[counter][xAxis + 2] == 0 && tetrisBoard[counter + 1][xAxis + 2] == 0 && tetrisBoard[counter + 2][xAxis + 2] == 0) {
+                shapeErase(counter); 
                 boardStateEraser(counter)
                 visualY = 1;
                 visualX = -1;
@@ -915,7 +917,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = 0;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 2 && xAxis + threeWide < 8) {
+            } else if(presses == 2 && xAxis + threeWide < 8 && tetrisBoard[counter][xAxis + 2] == 0 && tetrisBoard[counter + 1][xAxis + 2] == 0 && tetrisBoard[counter + 2][xAxis + 2] == 0) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 1;
@@ -956,7 +958,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = -1;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 1 && xAxis + threeWide < 8) {
+            } else if(presses == 1 && xAxis + threeWide < 8 && tetrisBoard[counter + 1][xAxis + 2] == 0) {
                 shapeErase(counter);
                 boardStateEraser(counter);
                 visualY = 0;
@@ -984,7 +986,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = -2;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 1 && xAxis + threeWide < 8) {
+            } else if(presses == 1 && xAxis + threeWide < 8 && tetrisBoard[counter][xAxis - 1] == 0 && tetrisBoard[counter + 1][xAxis] == 0) {
                 shapeErase(counter);
                 boardStateEraser(counter);
                 visualY = 0;
@@ -1041,7 +1043,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = -1;
                 threeWide = 0;
                 presses += 1;
-            } else if(presses == 1 && xAxis + threeWide < 8) {
+            } else if(presses == 1 && xAxis + threeWide < 8 && tetrisBoard[counter][xAxis + 2] == 0 && tetrisBoard[counter + 1][xAxis + 2] == 0) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 1;
@@ -1067,7 +1069,7 @@ document.addEventListener("keydown", function(evnt) {
                 visualX4 = -1;
                 threeWide = 0;
                 presses += 1;
-            }   else if(presses == 3 && xAxis + threeWide < 8) {
+            }   else if(presses == 3 && xAxis + threeWide < 8 && tetrisBoard[counter][xAxis + 2] == 0 && tetrisBoard[counter - 1][xAxis + 2] == 0) {
                 shapeErase(counter);
                 boardStateEraser(counter)
                 visualY = 0;
@@ -1103,7 +1105,9 @@ function render() {
     }
 }
 start.addEventListener("click", function(event) {
-    gameOn = 1;
-    countDown()
-    setInterval(render, 3600)
+    if(gameOn ==0) {
+        gameOn = 1;
+        countDown()
+        setInterval(render, 3600)
+    }
  })
