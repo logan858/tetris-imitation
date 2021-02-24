@@ -21,6 +21,7 @@ https://pages.git.generalassemb.ly/loganjm/tetris/
 * Pause feature
 * Next shape feature
 * Remove brief flashes in the shapes as pieces flip & move upon the x axis.  
+* Media queries & responsive design for smaller screens
 
 ### Technologies used
 * javaScript
