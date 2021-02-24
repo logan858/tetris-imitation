@@ -720,7 +720,7 @@ function shapeErase(x) {
 //*********************************************************************************** */ 
 //will have to also refuse inputs when counter = 0, when the function has an interval
 document.addEventListener("keydown", function(evnt) {
-    if(evnt.code == "ArrowLeft") {
+    if(evnt.code == "ArrowLeft" || evnt.code == "KeyA") {
         if (xAxis > 0) {
             if (currentShape > 0) {
                 
@@ -733,7 +733,7 @@ document.addEventListener("keydown", function(evnt) {
                 }
             }
         } 
-    } else if (evnt.code == "ArrowRight") {
+    } else if (evnt.code == "ArrowRight" || evnt.code == "KeyD") {
         if(currentShape > 0) {
             if([xAxis + threeWide] < 8) {
                 if ([counter + 1] < tetrisBoard.length && tetrisBoard[counter + 1][xAxis + threeWide + 2] == 0 && tetrisBoard[counter + 2][xAxis + threeWide + 2] === 0) {
@@ -751,7 +751,7 @@ document.addEventListener("keydown", function(evnt) {
 })
 let presses = 0;
 document.addEventListener("keydown", function(evnt) {
-    if(evnt.code == "Space") {
+    if(evnt.code == "Space" || evnt.code == "ShiftLeft") {
         if(currentShape == 2) {
             if(presses == 0 && xAxis + threeWide < 8) {
                 shapeErase(counter);
@@ -1023,5 +1023,5 @@ function render() {
 start.addEventListener("click", function(event) {
     gameOn = 1;
     countDown()
-    setInterval(heroShaper, 3600)
+    setInterval(render, 3600)
  })
