@@ -7,8 +7,8 @@ This project aims to recreate the classic game of Tetris. The goal of the game i
 
 
 ## Game Controls
-Space bar : flips blocks
-Arrow keys(left & right) : moves blocks left & right
+Shift key / Space bar : flips blocks
+Arrow keys(left & right) / A & D keys : moves blocks left & right
 
 ## Game Link
 https://pages.git.generalassemb.ly/loganjm/tetris/
@@ -22,7 +22,3 @@ https://pages.git.generalassemb.ly/loganjm/tetris/
 * javaScript
 * html 
 * css
-
-## Controls
-* Shift / space bar flips blocks
-* Left & right arrow keys move left & right, or the A & D keys.
