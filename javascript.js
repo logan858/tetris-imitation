@@ -106,6 +106,7 @@ buttns[7].addEventListener("click", pauseAud4);
 let xAxis = 4;
 let displayXAxis = 5;
 let counter = 0;
+let wideFlipCounter = 0;
 let scoreTotal = 0;
 let linesRem = 15;
 let blockCounter = 0;
@@ -372,7 +373,7 @@ function smashBoyShaper() {
             resetStates(z);
             return;
         }
-    }, 150)   
+    }, 175)   
 }
 function orangeRickyShaper() {
     currentShape = 2;
@@ -413,7 +414,7 @@ function orangeRickyShaper() {
                 resetStates(z)
                     return;
             }
-    }, 150)   
+    }, 175)   
 }
 function blueRickyShaper() {
     currentShape = 3;
@@ -454,7 +455,7 @@ function blueRickyShaper() {
             resetStates(z)
                 return;
         }
-    }, 150)   
+    }, 175)   
 }
 function clevelandZShaper() {
     threeWide = 1;
@@ -486,7 +487,7 @@ function clevelandZShaper() {
             resetStates(z)
                 return;
         }
-    }, 150)   
+    }, 175)   
 }
 function rhodeIslandZShaper() {
     threeWide = 1;
@@ -519,7 +520,7 @@ function rhodeIslandZShaper() {
             resetStates(z)
                 return;
         }
-    }, 150)   
+    }, 175)   
 }
 function heroShaper() {
     threeWide = -1
@@ -551,7 +552,7 @@ function heroShaper() {
             resetStates(z)
             return;
         }
-    }, 150)   
+    }, 175)   
 }
 function teeWeeShaper() {
     threeWide = 1;
@@ -566,6 +567,7 @@ function teeWeeShaper() {
         teeWee(i)
         i += 1;
         counter += 1;
+        wideFlipCounter += 1;
         teeWeeDisplay(i)
         if (i + 1 < tetrisBoard.length) {
             if(presses == 0) {
@@ -593,7 +595,7 @@ function teeWeeShaper() {
             resetStates(z)
             return;
         }
-    }, 150)   
+    }, 175)   
 }
 
 //Visual functions that add visual css classlists, & remove them
@@ -915,7 +917,8 @@ document.addEventListener("keydown", function(evnt) {
                 presses = 0;
             }
         } else if(currentShape == 6) {
-            if(presses == 0 && xAxis + threeWide + 2 < 8) {
+            if(presses == 0 && xAxis + threeWide + 2 < 8 && tetrisBoard[counter][xAxis + 1] == 0 && tetrisBoard[counter + 1][xAxis + 1] == 0 && tetrisBoard[counter + 2][xAxis + 1] == 0 && tetrisBoard[counter][xAxis + 2] == 0 && tetrisBoard[counter + 1][xAxis + 2] == 0 && tetrisBoard[counter + 2][xAxis + 2] == 0 && tetrisBoard[counter][xAxis + 3] == 0 && tetrisBoard[counter + 1][xAxis + 3] == 0 && tetrisBoard[counter + 2][xAxis + 3] == 0) {
+                console.log(tetrisBoard[counter][xAxis + 1])
                 shapeErase(counter);
                 boardStateEraser(counter);
                 visualY = 3;
@@ -1020,5 +1023,5 @@ function render() {
 start.addEventListener("click", function(event) {
     gameOn = 1;
     countDown()
-    setInterval(render, 3000)
+    setInterval(heroShaper, 3600)
  })
