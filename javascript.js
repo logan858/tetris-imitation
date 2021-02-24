@@ -295,11 +295,7 @@ function boardStateEraser(i) {
     }
 }
 
-
-
-
-//FUNCTIONS
-//function to keep track of game states
+//functions: basic game mechanics 
 function resetStates(z) {
     xAxis = 4;
     displayXAxis = 5;
@@ -431,8 +427,7 @@ function lineMoverState(i, j) {
     }
 }
 
-
-//functions for how each shape behaves
+//functions: shape behaviours
 function smashBoyShaper() {
     currentShape = 1;
     counter = 0;
@@ -679,8 +674,7 @@ function teeWeeShaper() {
         }
     }, 175)   
 }
-
-//Visual functions that add visual css classlists, & remove them
+//Visual functions
 function smashBoyDisplay(x) {
     let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + displayXAxis] + ")") 
     let blockLight2 = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + displayXAxis + 1] + ")") 
@@ -738,7 +732,6 @@ function teeWeeDisplay(x) {
     smashBoy.forEach(ele => ele.classList.add("blockpiece"))
 }
 
-// shapeErase will check to see which shape function is stored in a changing variable, and execute an according if eraser
 function shapeErase(x) {
     if(currentShape == 1) {
         let blockLight = document.querySelector("#boardplate div:nth-child(" + [[x - 1] * 10 + displayXAxis] + ")") 
@@ -792,15 +785,7 @@ function shapeErase(x) {
     }
 }
 
-//function to flip the block
-//function to check to see if a full row of grid elements are all switched to 1, and then switches all values to 0 & deletes blocks
-//function to check to see if any grid elements at the top are switched to 1, prompting lose condition
-//function to check is highscore varialbe hits a certain level, prompting win condition
-//score.innerHTML = "<p>" score "</p>";
-
-
-//*********************************************************************************** */ 
-//will have to also refuse inputs when counter = 0, when the function has an interval
+//eventlisteners: shape flips, xaxis movement
 document.addEventListener("keydown", function(evnt) {
     if(evnt.code == "ArrowLeft" || evnt.code == "KeyA") {
         if (xAxis > 0) {
