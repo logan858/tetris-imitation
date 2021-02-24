@@ -9,14 +9,18 @@ This project aims to recreate the classic game of Tetris. The goal of the game i
 ## Game Controls
 Shift key / Space bar : flips blocks
 Arrow keys(left & right) / A & D keys : moves blocks left & right
+1, 2, 3 & 4 : music short-cut keys
 
 ## Game Link
 https://pages.git.generalassemb.ly/loganjm/tetris/
 
 ## Future Enhancements
-* The game requires difficult mode options, to select first the line completion requirements, then speed preferences
-* High score tracking
-* Diagonal movement
+* Speed adjustments
+* High score tracking with server & session support
+* Diagonal movement (aka last second movement, after hitting a surface)
+* Pause feature
+* Next shape feature
+* Remove brief flashes in the shapes as pieces flip & move upon the x axis.  
 
 ### Technologies used
 * javaScript
