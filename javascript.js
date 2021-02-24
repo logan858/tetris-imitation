@@ -43,6 +43,9 @@ let cZ = document.getElementById("clevelandz")
 let riZ = document.getElementById("rhodeislandz")
 let he = document.getElementById("hero")
 let teeW = document.getElementById("teewee")
+const easyDiff = document.querySelector(".diff1")
+const medDiff = document.querySelector(".diff2")
+const hardDiff = document.querySelector(".diff3")
 
 function cGrid (x) { 
     for(i = 1; i <= x; i++) {
@@ -61,46 +64,124 @@ let audioThree = document.getElementById("audio3")
 let audioFour = document.getElementById("audio4")
 
 function playAud1() {
-    audioOne.volume = 0.1;
+    audioOne.volume = 0.05;
     audioOne.loop = true;
     audioOne.play();
+    pauseAud2();
+    pauseAud3();
+    pauseAud4();
+    audioFour.pause();
+    buttns[0].classList.add("active-music")
 } 
 function pauseAud1() {
     audioOne.pause();
+    buttns[0].classList.remove("active-music")
 } 
 function playAud2() {
-    audioTwo.volume = 0.3;
+    audioTwo.volume = 0.1;
     audioTwo.loop = true;
     audioTwo.play();
+    pauseAud1();
+    pauseAud3();
+    pauseAud4();
+    buttns[2].classList.add("active-music")
 } 
 function pauseAud2() {
     audioTwo.pause();
+    buttns[2].classList.remove("active-music")
 } 
 function playAud3() {
-    audioThree.volume = 0.4;
+    audioThree.volume = 0.1;
     audioThree.loop = true;
     audioThree.play();
-} 
+    pauseAud1();
+    pauseAud2();
+    pauseAud4();
+    buttns[4].classList.add("active-music")
+}  
 function pauseAud3() {
     audioThree.pause();
+    buttns[4].classList.remove("active-music")
 } 
 function playAud4() {
-    audioFour.volume = 0.4;
+    audioFour.volume = 0.1;
     audioFour.loop = true;
     audioFour.play();
+    pauseAud1();
+    pauseAud2();
+    pauseAud3();
+    buttns[6].classList.add("active-music")
 } 
 function pauseAud4() {
     audioFour.pause();
+    buttns[6].classList.remove("active-music")
 } 
 let buttns = document.querySelectorAll('button')
 buttns[0].addEventListener("click", playAud1);
+document.addEventListener("keydown", (evnt) => {
+    if(evnt.code == "Digit1") {
+        playAud1()
+    }
+});
 buttns[1].addEventListener("click", pauseAud1);
 buttns[2].addEventListener("click", playAud2);
+document.addEventListener("keydown", (evnt) => {
+    if(evnt.code == "Digit2") {
+        playAud2()
+    }
+});
 buttns[3].addEventListener("click", pauseAud2);
 buttns[4].addEventListener("click", playAud3);
+document.addEventListener("keydown", (evnt) => {
+    if(evnt.code == "Digit3") {
+        playAud3()
+    }
+});
 buttns[5].addEventListener("click", pauseAud3);
 buttns[6].addEventListener("click", playAud4);
+document.addEventListener("keydown", (evnt) => {
+    if(evnt.code == "Digit4") {
+        playAud4()
+    }
+});
 buttns[7].addEventListener("click", pauseAud4);
+document.addEventListener("keydown", (evnt) => {
+    if(evnt.code == "KeyP") {
+        pauseAud1();
+        pauseAud2();
+        pauseAud3();
+        pauseAud4();
+    }
+});
+//event listeners for difficulty mode
+
+easyDiff.addEventListener("click", function() {
+    if(gameOn == 0) {
+        medDiff.removeAttribute("id");
+        hardDiff.removeAttribute("id");
+        easyDiff.id = "active-mode";
+        linesRem = diffMode[0];
+        linesRemaining.textContent = "lines remaining: " + linesRem;
+    }    
+})
+medDiff.addEventListener("click", function() {
+    if(gameOn == 0) {
+        easyDiff.removeAttribute("id");
+        hardDiff.removeAttribute("id");
+        medDiff.id = "active-mode";
+        linesRem = diffMode[1];
+        linesRemaining.textContent = "lines remaining: " + linesRem;
+    }
+})
+hardDiff.addEventListener("click", function() {
+    if(gameOn == 0) {
+        medDiff.removeAttribute("id");
+        easyDiff.removeAttribute("id");
+        hardDiff.id = "active-mode";
+        linesRem = diffMode[2];
+        linesRemaining.textContent = "lines remaining: " + linesRem;
+    }
+})
 
 //starting positions for each block on the x axis
 let xAxis = 4;
@@ -108,14 +189,15 @@ let displayXAxis = 5;
 let counter = 0;
 let wideFlipCounter = 0;
 let scoreTotal = 0;
-let linesRem = 15;
+const diffMode = [15, 25, 50];
+let linesRem = diffMode[0];
 let blockCounter = 0;
 let shapeCounts = [0, 0, 0, 0, 0, 0, 0]
 let currentShape = 0;
 let gameOn = 0;
 score.textContent = "score: - "
 totalBlocks.textContent = "total blocks: - " 
-linesRemaining.textContent = "lines remaining: 15"
+linesRemaining.textContent = "lines remaining: " + linesRem;
 
 //variables for tracking & altering shape flips.  plus odd shapes.
 let threeWide = 0;
