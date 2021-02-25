@@ -366,7 +366,7 @@ function winnerCheck(z) {
            start.innerHTML = "YOU WIN!";
            reset.classList.add("resetbutton")
         }
-    gameOn = 0;
+        gameOn = 0;
     }
 }
 const winColors = [
