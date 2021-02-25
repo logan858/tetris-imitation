@@ -6,6 +6,10 @@ html {
 #title {
     text-align: center;
     margin: 0 auto;
+    opacity: 0.8;
+    border:rgba(82, 82, 82, 0.6) dotted 2px;
+    width: 500px;
+    filter: drop-shadow(0 0 3px rgba(82, 82, 82, 0.3));
 }
 #mainboard {
     position: relative;
