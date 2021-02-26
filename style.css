@@ -2,6 +2,7 @@
 html {
     background-color: rgb(36, 36, 36);
     font-family: 'Roboto', sans-serif;
+    user-select:none;
 }
 #title {
     text-align: center;
@@ -49,9 +50,10 @@ html {
     display: grid;
     grid-gap: 5px;
     grid-template: 2fr 2fr 2fr 1fr / 1fr;
+    cursor: default;
 }
 #leftbox1 {
-    background-color: rgba(145, 109, 61, 0.959);
+    background-color: rgba(182, 136, 77, 0.959);
     border: rgba(0,0,0,0.6) solid 1px;
     border-radius: 2px;
     grid-column: 1 / 2;
@@ -175,7 +177,7 @@ html {
     display: flex;
     align-items: center;
     height: 50px;
-    color: rgb(185, 184, 184)
+    color: rgb(185, 184, 184);
 }
 #lines {
     background-color: rgba(0,0,0, 0.6);
@@ -207,9 +209,10 @@ html {
     grid-gap: 2px;
     grid-template: 4fr 0.7fr 2fr 2fr / 1fr;
     grid-gap: 5px;
+    cursor: default;
 }
 #rightbox1 {
-    background-color: rgba(110, 55, 53, 0.959);
+    background-color: rgba(148, 73, 70, 0.959);
     border: rgba(0,0,0,0.4) solid 1px;
     border-radius: 2px;
     grid-column: 1 / 2;
@@ -314,7 +317,7 @@ html {
     padding-left: 5px;
 }
 #rightbox2 {
-    background-color: rgba(61, 145, 117, 0.959);
+    background-color: rgba(91, 155, 110, 0.959);
     grid-column: 1 / 2;
     grid-row: 2 / 3;
     border: rgba(0,0,0,0.4) solid 1px;
@@ -323,7 +326,7 @@ html {
     grid-template: 1fr / 1fr 1fr 1fr;
 }
 .diff1 {
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.4);
     position: relative;
     height: auto;
     border-radius: 2px;
@@ -335,7 +338,7 @@ html {
     cursor: pointer;
 }
 .diff2 {
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.4);
     position: relative;
     height: auto;
     border-radius: 2px;
@@ -347,7 +350,7 @@ html {
     cursor: pointer;
 }
 .diff3 {
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.4);
     position: relative;
     height: auto;
     border-radius: 2px;
@@ -359,9 +362,8 @@ html {
     cursor: pointer;
 }
 #active-mode {
-    border: 1px solid rgba(0,0,0,1);
     color: rgba(255, 255, 255, 0.7);
-    background-color: rgb(27, 27, 27);
+    background-color: rgba(27, 27, 27, 0.8);
 }
 
 
